@@ -8,7 +8,8 @@
   "license": "apache",
   "private": true,
   "scripts": {
-    "scss": "sass -s compressed --watch web/style.scss web/style.css"
+    "scss": "sass -s compressed --watch web/style.scss web/style.css",
+    "web": "node lib/web-server.js"
   },
   "dependencies": {
     "express": "^4.16.3",
