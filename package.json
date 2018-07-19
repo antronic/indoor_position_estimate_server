@@ -1,0 +1,10 @@
+{
+  "name": "indoor_position_estimate_server",
+  "version": "1.0.0",
+  "description": "Socket server for communicate between android app and PC",
+  "main": "index.js",
+  "repository": "https://github.com/antronic/indoor_position_estimate_server.git",
+  "author": "Jirachai C. <antronic.inc@gmail.com>",
+  "license": "apache",
+  "private": true
+}
