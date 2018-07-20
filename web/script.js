@@ -4,25 +4,23 @@ const x = []
 const y = []
 const z = []
 
-const raw_datasets = [
-  // '12,32,11',
-  // '23,44,12',
-  // '33,22,33',
-]
+const raw_datasets = []
+const xAxisLength = 20
 
 let datasets = []
 
 const update_datasets = () => {
+
   raw_datasets.forEach(d => {
     const val = d.split(',')
 
-    if (x.length > 10) {
+    if (x.length >= xAxisLength) {
       x.shift()
     }
-    if (y.length > 10) {
+    if (y.length >= xAxisLength) {
       y.shift()
     }
-    if (z.length > 10) {
+    if (z.length >= xAxisLength) {
       z.shift()
     }
 
@@ -30,7 +28,6 @@ const update_datasets = () => {
     y.push(parseFloat(val[1]))
     z.push(parseFloat(val[2]))
   })
-
 
   datasets = [
     {
@@ -67,6 +64,16 @@ const update_datasets = () => {
 
 }
 
+const labels = [0.0]
+const startTime = new Date().getTime()
+
+const update_labels = () => {
+  if (labels.length >= xAxisLength) {
+    labels.shift()
+  }
+
+  labels.push(((new Date().getTime() - startTime) / 1000).toFixed(1))
+}
 
 const listen_socket_io = () => {
   const socket = window.io('ws://localhost:30000')
@@ -74,13 +81,16 @@ const listen_socket_io = () => {
   socket.on('sensor_update', function (data) {
     document.getElementById('val').innerHTML = data
 
-    if (raw_datasets.length > 10) {
+
+    if (raw_datasets.length >= xAxisLength) {
       raw_datasets.shift()
     }
 
     raw_datasets.push(data)
 
     update_datasets()
+    update_labels()
+
     window.monitor.update()
   })
 }
@@ -94,7 +104,7 @@ window.onload = () => {
 
 
   const data = {
-    labels: new Array(11).fill(0),
+    labels: labels,
     datasets,
   }
 
@@ -104,29 +114,29 @@ window.onload = () => {
     tooltips: {
       mode: 'index',
     },
-    scales: {
-      yAxes: [{
-        id: 'y',
-        stacked: true,
-        gridLines: {
-          display: true,
-          color: 'rgba(255,99,132,0.2)',
-        },
-        display: true,
-        labelString: 'Value',
-      }],
+    // scales: {
+    //   yAxes: [{
+    //     id: 'y',
+    //     stacked: true,
+    //     gridLines: {
+    //       display: true,
+    //       color: 'rgba(255,99,132,0.2)',
+    //     },
+    //     display: true,
+    //     labelString: 'Value',
+    //   }],
 
-      xAxes: [{
-        id: 'x',
-        display: true,
-        gridLines: {
-          display: true
-        },
-        labelString: 'Time',
-      }],
-    },
+    //   xAxes: [{
+    //     id: 'x',
+    //     display: true,
+    //     gridLines: {
+    //       display: true
+    //     },
+    //     labelString: 'Time',
+    //   }],
+    // },
     animation: {
-      duration: 0,
+      duration: 100,
     }
   }
 
