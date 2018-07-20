@@ -1,0 +1,21 @@
+{
+  "name": "indoor_position_estimate_server",
+  "description": "Socket server for communicate between android app and PC",
+  "main": "index.js",
+  "authors": [
+    "Jirachai C. <antronic.inc@gmail.com>"
+  ],
+  "license": "apache",
+  "homepage": "https://github.com/antronic/indoor_position_estimate_server",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "web/libs",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "chart.js": "^2.7.2"
+  }
+}
